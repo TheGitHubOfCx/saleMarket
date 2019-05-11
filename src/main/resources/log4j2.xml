@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT" follow="true">
+            <PatternLayout>
+                <pattern>%d %p %C{1.} %m%n</pattern>
+            </PatternLayout>
+        </Console>
+
+    </Appenders>
+    <Loggers>
+        <!-- 输出info级别信息 -->
+        <Root level="INFO">
+            <AppenderRef ref="Console"/>
+
+        </Root>
+    </Loggers>
+</Configuration>

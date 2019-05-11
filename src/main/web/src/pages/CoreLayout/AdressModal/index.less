@@ -1,0 +1,47 @@
+.dispickerBox {
+  width: 100%;
+  height: 100%;
+  .addAddress {
+    margin-bottom: 10px;
+    font-size: 18px;
+  }
+  .dispickerDiv {
+    .addressDetail {
+      border-bottom: 1px solid #000;
+      margin-bottom: 15px;
+      .user {
+        display: flex;
+        justify-content: space-between;
+      }
+    }
+    .dispicker {
+      display: inherit;
+      margin-bottom: 20px;
+    }
+  }
+  .modelBox {
+    width: 100%;
+    height: 100%;
+    :global(.ant-modal-content) {
+      width: 100%;
+      :global(.ant-modal-body) {
+        width: 100%;
+        .contentBox {
+          width: 100%;
+          .content {
+            width: 100%;
+            margin-bottom: 10px;
+            :global(.ant-input) {
+              width: 300px !important;
+            }
+            .dispicker {
+              margin-right: 20px;
+            }
+          }
+
+        }
+      }
+    }
+
+  }
+}

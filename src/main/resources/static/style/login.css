@@ -1,0 +1,123 @@
+html {
+    height: 100%;
+}
+
+body {
+
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", SimSun, sans-serif;
+    line-height: 1.5;
+    /*background-color: rgba(105, 147, 58, 0.1);*/
+    background-size: 100% 100%;
+    overflow: hidden;
+    height: 100%;
+    margin: 0;
+    /*background-image: url(/framework/img/login_bg.png);*/
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+}
+
+.bg-img{
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+}
+
+form {
+    width: 39.24%;
+    height: 52%;
+    min-height: 250px;
+    min-width: 350px;
+    box-shadow: 3px 3px 10px #ccc;
+    border-radius: 10px;
+    background: #fff;
+    margin-top: -4rem;
+    position: absolute;
+    top:28%;
+}
+
+.login {
+    font-size: 22px;
+    color: #333;
+    height: 17.72%;
+    display: flex;
+    align-items: center;
+    padding-left: 15px;
+    border-bottom: 1px solid #dcdcdc;
+    margin: 5px 20px 0 20px;
+}
+
+.middle {
+    height: 17.72%;
+    margin: 8px 48px 0 48px;
+    font-size: 16px;
+    color: #bbbbbb;
+    display: flex;
+    align-items: center;
+}
+
+.content {
+    height: calc(100% - 17.72% - 17.72% - 84px);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+    padding: 0 48px;
+}
+
+input {
+    width: calc(100% - 116px);
+    padding-left: 15px;
+    font-size: 16px;
+    border-radius: 5px;
+    box-shadow: none;
+    outline: none;
+    border-style: none;
+    border: 1px solid #dcdcdc;
+    height: 11.65%;
+    margin: 0 48px;
+}
+
+.password {
+    margin-top: 3%;
+}
+
+button {
+    width: calc(100% - 96px);
+    background-color: #3398f6;
+    margin: 0 48px;
+    color: #fff;
+    height: 10.63%;
+    font-size: 18px;
+    letter-spacing: 6px;
+    outline: none;
+    display: block;
+    text-align: center;
+    white-space: nowrap;
+    cursor: pointer;
+    touch-action: manipulation;
+    border: none;
+    text-transform: none;
+    -webkit-user-select: none;
+    vertical-align: middle;
+    border-radius: 5px;
+    margin-top: 3%;
+}
+
+.forget {
+    color: #3398f6;
+    margin: 15px 48px 0 48px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+#error {
+    margin-top: 1%;
+    color: #d73435;
+    margin-left: 48px;
+    font-size: 14px;
+}
+
