@@ -38,6 +38,8 @@ class CoreLayout extends Component {
       dispatch({type: 'dataPlay/setState', payload: {drawerVisible: true, drawerType: key}})
     } else if (key === '4') {
       dispatch({type: 'dataPlay/setState', payload: {drawerVisible: true, drawerType: key}})
+    } else if (key === '5') {
+      history.push('/' + 'manage')
     }
   }
 
@@ -166,9 +168,11 @@ class CoreLayout extends Component {
       titleValue = '收货地址'
     }
     let userName = null
+    let userType = null
     userList && userList.map((user) => {
       if (user.id === userId) {
         userName = user.name
+        userType = user.userType
       }
     })
     const menu = (
@@ -181,6 +185,9 @@ class CoreLayout extends Component {
         </Menu.Item> : void 0}
         {userId ? <Menu.Item key="4">
           <div><Icon type="logout"/> 账号设置</div>
+        </Menu.Item> : void 0}
+        {userType && userType === '1' ? <Menu.Item key="5">
+          <div><Icon type="logout"/> 后台管理</div>
         </Menu.Item> : void 0}
         <Menu.Item key="1">
           <div className={styles.logOut}> {userId ? "注 销 " : "登 录 "}</div>

@@ -6,6 +6,7 @@ module.exports.routers = [
       {path: '/register', component: './Register/index'},
       {path: '/signIn', component: './SignIn/index'},
       {path: '/details', component: './GoodsDetails/index'},
+      {path: '/manage', component: './Manage/index'},
     ]
   }
 ]

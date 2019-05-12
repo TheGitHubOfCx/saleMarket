@@ -5,7 +5,15 @@ export default {
 
   namespace: 'signIn',
 
-  state: {},
+  state: {
+    userList: '',
+    goodInfoList: '',
+    orderInfoList: '',
+    editVisible: false,
+    recordValue:'',
+    goodRecord:'',
+    goodVisible:false
+  },
 
   subscriptions: {
     setup({dispatch, history}) {

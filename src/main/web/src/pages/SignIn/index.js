@@ -47,8 +47,8 @@ class SignIn extends Component {
 
   passWordChecked(rule, value, callback) {
     var patt = new RegExp(/\s+/g);
-    if (value && value.length < 6) {
-      callback('密码位数不得少于6位数')
+    if (value && value.length < 4) {
+      callback('密码位数不得少于4位数')
     }
     if (patt.test(value)) {
       callback('密码不可含有空格')

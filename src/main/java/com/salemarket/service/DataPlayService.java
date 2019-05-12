@@ -2,6 +2,7 @@ package com.salemarket.service;
 
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.joinforwin.toolkit.kit.EncryptKit;
 import com.joinforwin.toolkit.kit.IdKit;
 import com.salemarket.SmsVerification.CheckSumBuilder;
 import com.salemarket.controller.DataPlayController;
@@ -83,7 +84,7 @@ public class DataPlayService {
      * 商品列表
      */
     public List<SaleGoods> getGoodList(String input, String type) {
-        List<SaleGoods> goodList = dataPlayMapper.getGoodList(input, type);
+        List<SaleGoods> goodList = dataPlayMapper.getGoodList(input.length() > 0 ? input : null, type.length() > 0 ? type : null);
         return goodList;
     }
 
@@ -95,7 +96,7 @@ public class DataPlayService {
         int start = current - 1;
 //        int end = current * pageSize + 1;
         int limit = start * pageSize;
-        List<SaleGoods> saleGoods = dataPlayMapper.goodsPagin(limit,pageSize, input.length() > 0 ? input : null, type.length() > 0 ? type : null);
+        List<SaleGoods> saleGoods = dataPlayMapper.goodsPagin(limit, pageSize, input.length() > 0 ? input : null, type.length() > 0 ? type : null);
         return saleGoods;
     }
 

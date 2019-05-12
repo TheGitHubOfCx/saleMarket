@@ -79,8 +79,13 @@ public class DetailsService {
      * 查询订单
      */
     public List<SaleOrder> queryOrderListByUserId(String userId) {
-        List<SaleOrder> user_id = saleOrderMapper.selectList(new EntityWrapper<SaleOrder>().eq("USER_ID", userId));
-        return user_id;
+        if (userId.length() > 0) {
+            List<SaleOrder> user_id = saleOrderMapper.selectList(new EntityWrapper<SaleOrder>().eq("USER_ID", userId));
+            return user_id;
+        } else {
+            List<SaleOrder> orderList = saleOrderMapper.selectList(null);
+            return orderList;
+        }
     }
 
     /**

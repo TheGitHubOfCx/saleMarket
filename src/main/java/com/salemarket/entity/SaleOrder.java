@@ -49,6 +49,17 @@ public class SaleOrder extends Model<SaleOrder> {
     @TableField("ADDRESS_ID")
     private String addressId;
 
+    @TableField("CREATE_DATE")
+    private String createDate;
+
+    public String getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(String createDate) {
+        this.createDate = createDate;
+    }
+
     public String getAddressId() {
         return addressId;
     }

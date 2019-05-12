@@ -31,7 +31,16 @@ public class SaleUser extends Model<SaleUser> {
 	private String sex;
 	@TableField("PHONE_NUM")
 	private String phoneNum;
+	@TableField("userType")
+	private String userType;
 
+	public String getUserType() {
+		return userType;
+	}
+
+	public void setUserType(String userType) {
+		this.userType = userType;
+	}
 
 	public String getId() {
 		return id;
