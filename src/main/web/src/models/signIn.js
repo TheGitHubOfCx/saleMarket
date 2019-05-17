@@ -10,9 +10,10 @@ export default {
     goodInfoList: '',
     orderInfoList: '',
     editVisible: false,
-    recordValue:'',
-    goodRecord:'',
-    goodVisible:false
+    recordValue: '',
+    goodRecord: '',
+    goodVisible: false,
+    imgList: ''
   },
 
   subscriptions: {

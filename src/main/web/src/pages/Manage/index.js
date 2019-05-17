@@ -220,7 +220,7 @@ class Index extends Component {
         </Sider>
         <Layout>
           <Header className={styles.herder}>
-            <div className={styles.headerLeft}>欢迎使用小零嘴后台管理系统</div>
+            <div className={styles.headerLeft}>欢迎使用优乐零食网后台管理系统</div>
           </Header>
           <Content className={styles.content}>
             {keyValue === 'user' ? <div>

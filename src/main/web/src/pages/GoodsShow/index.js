@@ -6,6 +6,8 @@ import {Pagination, Tabs, Spin, Icon, Carousel, Input} from "antd";
 import styles from "./index.less";
 import {connect} from "dva";
 import Message from "./MessageModal/index";
+import axios from 'axios'
+import alert from '../../common/alert'
 
 const userId = window.sessionStorage.getItem("userId")
 const Search = Input.Search;
@@ -21,6 +23,7 @@ class GoodsShow extends Component {
     const {dispatch, dataPlay} = this.props
     let {current} = dataPlay
     window.sessionStorage.setItem("goodId", '')
+    window.sessionStorage.setItem("imgSrc", '')
     dispatch({type: 'dataPlay/hotGoodList', payload: {input: null, type: 'hot'}})
     dispatch({type: 'dataPlay/discountGoodList', payload: {input: null, type: 'discount'}})
     dispatch({type: 'dataPlay/importGoodList', payload: {input: null, type: 'import'}})
@@ -28,6 +31,11 @@ class GoodsShow extends Component {
     dispatch({type: 'dataPlay/disTypePagin', payload: {current, pageSize: 10, input: '', type: 'discount'}})
     dispatch({type: 'dataPlay/impTypePagin', payload: {current, pageSize: 10, input: '', type: 'import'}})
     dispatch({type: 'dataPlay/setState', payload: {searchValue: ''}})
+    axios.post('/queryImgList.do').then(res => {
+      dispatch({type: 'dataPlay/setState', payload: {imgList: res.data.payload}})
+    }).catch(err =>
+      alert("查询", {code: 0})
+    );
   }
 
   //注销
@@ -64,9 +72,10 @@ class GoodsShow extends Component {
     dispatch({type: 'dataPlay/hotTypePagin', payload: {current, pageSize: 10, input: value, type: ''}})
   }
 
-  showDetail(id) {
+  showDetail(id, imgSrc) {
     const {details, history} = this.props
     window.sessionStorage.setItem("goodId", id)
+    window.sessionStorage.setItem("imgSrc", imgSrc)
     // dispatch({type: 'details/getGoodsById', payload: {goodId: id}})
     history.push("/details")
   }
@@ -74,15 +83,15 @@ class GoodsShow extends Component {
 
   render() {
     const {dataPlay} = this.props
-    let {goodsList, current, hotPaginList, hotLoading, searchValue, disLoading, imLoading, disCountList, importList, disPaginList, impPaginList, disCurrent, impCurrent} = dataPlay
+    let {goodsList, current, hotPaginList, hotLoading, searchValue, disLoading, imLoading, disCountList, importList, disPaginList, impPaginList, disCurrent, impCurrent, imgList} = dataPlay
     return (
-      <section className={styles.section}>
+      <div className={styles.section}>
         <div className={styles.header}>
           <div className={styles.logoBox}>
             <div>
               <img src="/img/linshi.png" style={{width: '47px'}}/>
             </div>
-            <div className={styles.name}>小零嘴</div>
+            <div className={styles.name}>优乐零食网</div>
           </div>
           <div className={styles.search}>
             <div className={styles.searchDiv}>
@@ -114,9 +123,10 @@ class GoodsShow extends Component {
               <div className={styles.showBox}>
                 <div className={styles.goodsShow}>
                   {
-                    hotPaginList && hotPaginList.length > 0 ? hotPaginList.map(data => {
-                      return <div className={styles.good} onClick={() => this.showDetail(data.id)}>
-                        <div><img src={data.imgSrc} style={{
+                    hotPaginList && hotPaginList.length > 0 ? hotPaginList.map((data, index) => {
+                      return <div className={styles.good}
+                                  onClick={() => this.showDetail(data.id, imgList ? imgList[index].imgSrc : data.imgSrc)}>
+                        <div><img src={imgList ? imgList[index].imgSrc : data.imgSrc} style={{
                           width: '230px',
                           height: '215px'
                         }}/></div>
@@ -152,9 +162,9 @@ class GoodsShow extends Component {
               <div className={styles.showBox}>
                 <div className={styles.goodsShow}>
                   {
-                    disPaginList && disPaginList.length > 0 ? disPaginList.map(data => {
+                    disPaginList && disPaginList.length > 0 ? disPaginList.map((data, index) => {
                       return <div className={styles.good}>
-                        <div><img src={data.imgSrc} style={{
+                        <div><img src={imgList ? imgList[index + 2].imgSrc : data.imgSrc} style={{
                           width: '230px',
                           height: '215px'
                         }}/></div>
@@ -191,9 +201,9 @@ class GoodsShow extends Component {
               <div className={styles.showBox}>
                 <div className={styles.goodsShow}>
                   {
-                    impPaginList && impPaginList.length > 0 ? impPaginList.map(data => {
+                    impPaginList && impPaginList.length > 0 ? impPaginList.map((data, index) => {
                       return <div className={styles.good}>
-                        <div><img src={data.imgSrc} style={{
+                        <div><img src={imgList ? imgList[index + 4].imgSrc : data.imgSrc} style={{
                           width: '230px',
                           height: '215px'
                         }}/></div>
@@ -225,7 +235,7 @@ class GoodsShow extends Component {
         <div className={styles.footer}>
           <Message/>
         </div>
-      </section>
+      </div>
     )
   }
 }

@@ -24,7 +24,8 @@ export default {
     messageLoading: false,
     messageList: '',
     drawerVisible: false,
-    drawerType: ''
+    drawerType: '',
+    imgList: ''
   },
 
   subscriptions: {

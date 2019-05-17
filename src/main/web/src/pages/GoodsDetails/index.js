@@ -83,12 +83,13 @@ class Details extends Component {
   render() {
     const {details, form} = this.props
     let {goodDetail, commentList, buyVisible, addressList, useredAddress} = details
+    let imgSrc = window.sessionStorage.getItem("imgSrc")
     return (
       <section className={styles.section}>
         <div className={styles.body}>
           <div className={styles.infoBox}>
             <div className={styles.img}>
-              <img style={{width: '440px'}} src={goodDetail.imgSrc}/>
+              <img style={{width: '440px'}} src={imgSrc}/>
             </div>
             <div className={styles.details} style={{margin: "0 0 0 10px"}}>
               <div className={styles.name} style={{fontSize: "18px"}}>

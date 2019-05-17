@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import styles from './index.less';
-import {Menu, Icon, Input, Layout, Form, Modal, Table, Popconfirm, Select} from 'antd'
+import {Menu, Icon, Input, Layout, Form, Modal, Table, Popconfirm, Select, Tooltip, notification} from 'antd'
 import {connect} from 'dva'
 import router from 'umi/router';
 import axios from 'axios'
@@ -38,7 +38,12 @@ class GoodsModal extends Component {
 
   setVisible(record) {
     const {dispatch} = this.props
-    dispatch({type: 'signIn/setState', payload: {editVisible: true, recordValue: record}})
+    notification['warning']({
+      message: '提醒',
+      description: '发货成功',
+      // icon: <Icon type="smile" style={{color: '#108ee9'}}/>,
+    });
+    // dispatch({type: 'signIn/setState', payload: {editVisible: true, recordValue: record}})
   }
 
   cancel() {
@@ -138,10 +143,16 @@ class GoodsModal extends Component {
       width: '150px',
       render: (text, record) => {
         return <div>
-          {/*<span><Icon type="edit" onClick={() => this.setVisible(record)}/> </span>*/}
+          <span style={{marginRight: '15px'}}>
+            <Tooltip title="发货">
+              <Icon type="home" onClick={() => this.setVisible(record)}/>
+            </Tooltip>
+          </span>
           <span>
                       <Popconfirm title="确定删除该条数据吗?" onConfirm={() => this.confirm(record)} okText="确定" cancelText="取消">
-                        <Icon type="delete"/>
+                        <Tooltip title="删除">
+                          <Icon type="delete"/>
+                        </Tooltip>
                       </Popconfirm>
                     </span>
         </div>

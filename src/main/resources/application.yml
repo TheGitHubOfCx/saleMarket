@@ -4,7 +4,7 @@ spring:
 #    driver-class-name: oracle.jdbc.OracleDriver
     driver-class-name: com.mysql.cj.jdbc.Driver
 #    url: jdbc:oracle:thin:@192.168.51.50:1521/HIPDB
-    url: jdbc:mysql://47.98.143.181:3306/salemarket?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+    url: jdbc:mysql://47.98.143.181:3306/salemarket?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&useSSL=false
 #    username: HIP_SALE
 #    password: hip000
     username: root
