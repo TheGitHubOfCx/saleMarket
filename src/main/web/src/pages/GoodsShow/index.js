@@ -2,7 +2,7 @@
  * Created by Winna on 2017/6/16.
  */
 import React, {Component} from "react";
-import {Pagination, Tabs, Spin, Icon, Carousel, Input} from "antd";
+import {Pagination, Tabs, Spin, Select, Carousel, Input} from "antd";
 import styles from "./index.less";
 import {connect} from "dva";
 import Message from "./MessageModal/index";
@@ -24,12 +24,15 @@ class GoodsShow extends Component {
     let {current} = dataPlay
     window.sessionStorage.setItem("goodId", '')
     window.sessionStorage.setItem("imgSrc", '')
-    dispatch({type: 'dataPlay/hotGoodList', payload: {input: null, type: 'hot'}})
-    dispatch({type: 'dataPlay/discountGoodList', payload: {input: null, type: 'discount'}})
-    dispatch({type: 'dataPlay/importGoodList', payload: {input: null, type: 'import'}})
-    dispatch({type: 'dataPlay/hotTypePagin', payload: {current, pageSize: 10, input: '', type: 'hot'}})
-    dispatch({type: 'dataPlay/disTypePagin', payload: {current, pageSize: 10, input: '', type: 'discount'}})
-    dispatch({type: 'dataPlay/impTypePagin', payload: {current, pageSize: 10, input: '', type: 'import'}})
+    dispatch({type: 'dataPlay/hotGoodList', payload: {input: '', type: 'hot', foodType: ''}})
+    dispatch({type: 'dataPlay/discountGoodList', payload: {input: '', type: 'discount', foodType: ''}})
+    dispatch({type: 'dataPlay/importGoodList', payload: {input: '', type: 'import', foodType: ''}})
+    dispatch({type: 'dataPlay/hotTypePagin', payload: {current, pageSize: 10, input: '', type: 'hot', foodType: ''}})
+    dispatch({
+      type: 'dataPlay/disTypePagin',
+      payload: {current, pageSize: 10, input: '', type: 'discount', foodType: ''}
+    })
+    dispatch({type: 'dataPlay/impTypePagin', payload: {current, pageSize: 10, input: '', type: 'import', foodType: ''}})
     dispatch({type: 'dataPlay/setState', payload: {searchValue: ''}})
     axios.post('/queryImgList.do').then(res => {
       dispatch({type: 'dataPlay/setState', payload: {imgList: res.data.payload}})
@@ -80,6 +83,20 @@ class GoodsShow extends Component {
     history.push("/details")
   }
 
+  changeType(e) {
+    const {dispatch, dataPlay} = this.props
+    let {current} = dataPlay
+    dispatch({type: 'dataPlay/hotGoodList', payload: {input: '', type: 'hot', foodType: e}})
+    dispatch({type: 'dataPlay/discountGoodList', payload: {input: '', type: 'discount', foodType: e}})
+    dispatch({type: 'dataPlay/importGoodList', payload: {input: '', type: 'import', foodType: e}})
+    dispatch({type: 'dataPlay/hotTypePagin', payload: {current, pageSize: 10, input: '', type: 'hot', foodType: e}})
+    dispatch({
+      type: 'dataPlay/disTypePagin',
+      payload: {current, pageSize: 10, input: '', type: 'discount', foodType: e}
+    })
+    dispatch({type: 'dataPlay/impTypePagin', payload: {current, pageSize: 10, input: '', type: 'import', foodType: e}})
+  }
+
 
   render() {
     const {dataPlay} = this.props
@@ -113,12 +130,21 @@ class GoodsShow extends Component {
             <div><img src="/img/p4.jpg" style={{height: '400px', width: '100%'}}/></div>
           </Carousel>
         </div>
+        <div style={{width: '200px', margin: '20px 0 20px 52px'}}>
+          <Select placeholder="请选择零食类型" style={{width: '200px'}} onChange={(e) => this.changeType(e)}>
+            <option value='0'>糕点类</option>
+            <option value='1'>坚果类</option>
+            <option value='2'>糖果类</option>
+            <option value='3'>饼干类</option>
+          </Select>
+        </div>
         <div className={styles.body}>
           <div className={styles.hotType}>
             <div className={styles.title}>
               <div className={styles.titleDiv}></div>
               热卖商品
             </div>
+
             <Spin spinning={hotLoading}>
               <div className={styles.showBox}>
                 <div className={styles.goodsShow}>

@@ -6,6 +6,8 @@ import {Avatar, Dropdown, Menu, Icon, Drawer, InputNumber, Button, Modal, notifi
 import styles from "./index.less";
 import {connect} from "dva";
 import Adress from './AdressModal/index'
+import axios from 'axios'
+import alert from '../../common/alert'
 
 const userId = window.sessionStorage.getItem("userId")
 
@@ -155,6 +157,23 @@ class CoreLayout extends Component {
     dispatch({type: 'details/setState', payload: {buyOrderVisible: false}})
   }
 
+  completeOrder(record) {
+    const {dispatch} = this.props
+    axios.post('/completeOder', {id: record.id}).then(res => {
+      if (res.data.code === 1) {
+        dispatch({type: 'details/queryOrderListByUserId', payload: {userId}})
+        axios.post('/queryOrderListByUserId', {userId: ''}).then(res => {
+          dispatch({type: 'signIn/setState', payload: {orderInfoList: res.data.payload}})
+        }).catch(err =>
+          alert("查询订单", {code: 0})
+        );
+        alert("确认收货", {code: 1})
+      }
+    }).catch(err =>
+      alert("确认收货", {code: 0})
+    );
+  }
+
   render() {
     const {dataPlay, details} = this.props
     const {userList, drawerVisible, drawerType} = dataPlay
@@ -269,9 +288,17 @@ class CoreLayout extends Component {
                 <div style={{fontSize: '16px'}}>
                   {data.isBuy === '0' ? <a onClick={() => this.bugOrderGood(data)}>未付款</a> : "已付款"}
                 </div>
+                {data.status === '1' ? <div>
+                  <Button size="small" onClick={() => this.completeOrder(data)}>确认收货</Button>
+                </div> : <div>
+                  <Button size="small" disabled>确认收货</Button>
+                </div>}
                 <div>
                   <Button size="small" onClick={() => this.deleteOrderById(data.id)}>删除</Button>
                 </div>
+              </div>
+              <div style={{fontSize: '16px'}}>
+                {data.status === '0' ? "未发货" : data.status === '1' ? "已发货" : "已完成"}
               </div>
               <div>
                 {data.createData}
@@ -301,4 +328,4 @@ class CoreLayout extends Component {
   }
 }
 
-export default connect(({dataPlay, details}) => ({dataPlay, details}))(CoreLayout)
+export default connect(({dataPlay, details, signIn}) => ({dataPlay, details, signIn}))(CoreLayout)

@@ -38,11 +38,23 @@ class GoodsModal extends Component {
 
   setVisible(record) {
     const {dispatch} = this.props
-    notification['warning']({
-      message: '提醒',
-      description: '发货成功',
-      // icon: <Icon type="smile" style={{color: '#108ee9'}}/>,
-    });
+    axios.post('/updateOrderStatus', {id: record.id}).then(res => {
+      if (res.data.code === 1) {
+        axios.post('/queryOrderListByUserId', {userId: ''}).then(res => {
+          dispatch({type: 'signIn/setState', payload: {orderInfoList: res.data.payload}})
+        }).catch(err =>
+          alert("查询", {code: 0})
+        );
+        dispatch({type: 'details/queryOrderListByUserId', payload: {userId}})
+        notification['warning']({
+          message: '提醒',
+          description: '发货成功',
+          // icon: <Icon type="smile" style={{color: '#108ee9'}}/>,
+        });
+      }
+    }).catch(err =>
+      alert("查询", {code: 0})
+    );
     // dispatch({type: 'signIn/setState', payload: {editVisible: true, recordValue: record}})
   }
 
@@ -105,8 +117,9 @@ class GoodsModal extends Component {
     let {getFieldDecorator} = form
     const columns = [{
       title: '商品名称',
-      dataIndex: 'goodName',
+      dataIndex: 'goodsName',
       key: 'goodName',
+      width: 150,
       render: (text, record) => {
         return <a>{text ? text : "暂无"}</a>
       }
@@ -137,6 +150,26 @@ class GoodsModal extends Component {
       dataIndex: 'userId',
       key: 'userId',
     }, {
+      title: '收获地址',
+      dataIndex: '',
+      key: '',
+      render: (record) => {
+        return <div>{record.province}{record.city}{record.area}{record.detailAdress}</div>
+      }
+    }, {
+      title: '联系方式',
+      dataIndex: 'phoneNum',
+      key: 'phoneNum',
+    }, {
+      title: '订单状态',
+      dataIndex: 'status',
+      key: 'status',
+      render: (text) => {
+        return <div style={text === '0' ? {color: "red"} : text === '1' ? {color: "gray"} : {color: "green"}}>
+          {text === '0' ? "未发货" : text === '1' ? "已发货" : "已完成"}
+        </div>
+      }
+    }, {
       title: '操作',
       dataIndex: '',
       key: '',
@@ -145,7 +178,7 @@ class GoodsModal extends Component {
         return <div>
           <span style={{marginRight: '15px'}}>
             <Tooltip title="发货">
-              <Icon type="home" onClick={() => this.setVisible(record)}/>
+              {record.status === '0' ? <Icon type="home" onClick={() => this.setVisible(record)}/> : void 0}
             </Tooltip>
           </span>
           <span>
@@ -241,5 +274,5 @@ class GoodsModal extends Component {
   }
 }
 GoodsModal = Form.create()(GoodsModal)
-export default connect(({signIn}) => ({signIn}))(GoodsModal)
+export default connect(({signIn,details}) => ({signIn,details}))(GoodsModal)
 

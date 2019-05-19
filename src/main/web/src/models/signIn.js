@@ -13,7 +13,8 @@ export default {
     recordValue: '',
     goodRecord: '',
     goodVisible: false,
-    imgList: ''
+    imgList: '',
+    typeOfFood:''
   },
 
   subscriptions: {

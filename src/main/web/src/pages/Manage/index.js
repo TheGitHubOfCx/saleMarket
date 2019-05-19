@@ -48,7 +48,7 @@ class Index extends Component {
         alert("查询", {code: 0})
       );
     } else if ("goods" === e.key) {
-      axios.post('/getGoodList', {input: '', type: ''}).then(res => {
+      axios.post('/getGoodList', {input: '', type: '', foodType: ''}).then(res => {
         dispatch({type: 'signIn/setState', payload: {goodInfoList: res.data.payload}})
       }).catch(err =>
         alert("查询", {code: 0})

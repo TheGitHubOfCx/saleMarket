@@ -29,7 +29,7 @@ class OrderModal extends Component {
       })
       return
     }
-    axios.post('/getGoodList', {type: '', input: ''}).then(res => {
+    axios.post('/getGoodList', {type: '', input: '', foodType: ''}).then(res => {
       dispatch({type: 'signIn/setState', payload: {goodInfoList: res.data.payload}})
     }).catch(err =>
       alert("查询", {code: 0})
@@ -55,11 +55,11 @@ class OrderModal extends Component {
       if (errors) {
         return
       }
-      if(goodRecord){
+      if (goodRecord) {
         values['id'] = goodRecord.id
         axios.post('/updateGoods', {values}).then(res => {
           if (res.data.code === 1) {
-            axios.post('/getGoodList', {type: '', input: ''}).then(res => {
+            axios.post('/getGoodList', {type: '', input: '', foodType: ''}).then(res => {
               dispatch({type: 'signIn/setState', payload: {goodInfoList: res.data.payload}})
             }).catch(err =>
               alert("查询", {code: 0})
@@ -69,10 +69,10 @@ class OrderModal extends Component {
         }).catch(err =>
           alert("修改", {code: 0})
         );
-      }else{
+      } else {
         axios.post('/addGoods', {values}).then(res => {
           if (res.data.code === 1) {
-            axios.post('/getGoodList', {type: '', input: ''}).then(res => {
+            axios.post('/getGoodList', {type: '', input: '', foodType: ''}).then(res => {
               dispatch({type: 'signIn/setState', payload: {goodInfoList: res.data.payload}})
             }).catch(err =>
               alert("查询", {code: 0})
@@ -96,7 +96,7 @@ class OrderModal extends Component {
     const {dispatch} = this.props
     axios.post('/delGoods', {id: record.id}).then(res => {
       if (res.data.code === 1) {
-        axios.post('/getGoodList', {type: '', input: ''}).then(res => {
+        axios.post('/getGoodList', {type: '', input: '', foodType: ''}).then(res => {
           dispatch({type: 'signIn/setState', payload: {goodInfoList: res.data.payload}})
         }).catch(err =>
           alert("查询", {code: 0})
@@ -113,9 +113,14 @@ class OrderModal extends Component {
     dispatch({type: 'signIn/setState', payload: {goodVisible: true}})
   }
 
+  setFoodType(e) {
+    const {dispatch} = this.props
+    dispatch({type: 'signIn/setState', payload: {typeOfFood: e}})
+  }
+
   render() {
     const {form, signIn} = this.props
-    const {goodInfoList, goodVisible, goodRecord} = signIn
+    const {goodInfoList, goodVisible, goodRecord, typeOfFood} = signIn
     const formItemLayout2 = {labelCol: {span: 5}, wrapperCol: {span: 15}}
     const {keyValue} = this.state
     let {getFieldDecorator} = form
@@ -151,6 +156,13 @@ class OrderModal extends Component {
       key: 'salesvolume',
       render: (text) => {
         return <span>{text ? text + "件" : "暂无" }</span>
+      }
+    }, {
+      title: '零食类型',
+      dataIndex: 'foodType',
+      key: 'foodType',
+      render: (text) => {
+        return <span>{text === '0' ? "糕点类" : text === '1' ? "坚果类" : text === '2' ? "糖果类" : text === '3' ? "饼干类" : "暂无" }</span>
       }
     }, {
       title: '操作',
@@ -244,6 +256,22 @@ class OrderModal extends Component {
               })(
                 <Input style={{width: '300px', marginRight: '30px'}}
                        placeholder="请输入产地"/>
+              )}
+            </Form.Item>
+            <Form.Item label="食品类型:" {...formItemLayout2}>
+              {getFieldDecorator('foodType', {
+                initialValue: typeOfFood ? typeOfFood : goodRecord.foodType,
+                rules: [],
+              })(
+                <div style={{width: '300px', marginRight: '30px'}}>
+                  <Select value={typeOfFood ? typeOfFood : goodRecord.foodType} placeholder="请选择零食类型"
+                          style={{width: '300px', marginRight: '30px'}} onChange={(e) => this.setFoodType(e)}>
+                    <option value='0'>糕点类</option>
+                    <option value='1'>坚果类</option>
+                    <option value='2'>糖果类</option>
+                    <option value='3'>饼干类</option>
+                  </Select>
+                </div>
               )}
             </Form.Item>
           </Form>

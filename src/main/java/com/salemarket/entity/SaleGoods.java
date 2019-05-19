@@ -20,106 +20,116 @@ import java.io.Serializable;
 @TableName("sale_goods")
 public class SaleGoods extends Model<SaleGoods> {
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    @TableId("ID")
-    private String id;
-    @TableField("GOODS_NAME")
-    private String goodsName;
-    @TableField("GOODS_TYPE")
-    private String goodsType;
-    @TableField("IMG_SRC")
-    private String imgSrc;
-    @TableField("GOODS_PRICE")
-    private Integer goodsPrice;
-    @TableField("COMMENT_ID")
-    private String commentId;
-    @TableField("ORIGIN_PLACE")
-    private String originPlace;
-    @TableField("SALESVOLUME")
-    private String salesvolume;
+  @TableId("ID")
+  private String id;
+  @TableField("GOODS_NAME")
+  private String goodsName;
+  @TableField("GOODS_TYPE")
+  private String goodsType;
+  @TableField("IMG_SRC")
+  private String imgSrc;
+  @TableField("GOODS_PRICE")
+  private Integer goodsPrice;
+  @TableField("COMMENT_ID")
+  private String commentId;
+  @TableField("ORIGIN_PLACE")
+  private String originPlace;
+  @TableField("SALESVOLUME")
+  private String salesvolume;
 
+  @TableField("FOOD_TYPE")
+  private String foodType;
 
-    public String getId() {
-        return id;
-    }
+  public String getFoodType() {
+    return foodType;
+  }
 
-    public void setId(String id) {
-        this.id = id;
-    }
+  public void setFoodType(String foodType) {
+    this.foodType = foodType;
+  }
 
-    public String getGoodsName() {
-        return goodsName;
-    }
+  public String getId() {
+    return id;
+  }
 
-    public void setGoodsName(String goodsName) {
-        this.goodsName = goodsName;
-    }
+  public void setId(String id) {
+    this.id = id;
+  }
 
-    public String getGoodsType() {
-        return goodsType;
-    }
+  public String getGoodsName() {
+    return goodsName;
+  }
 
-    public void setGoodsType(String goodsType) {
-        this.goodsType = goodsType;
-    }
+  public void setGoodsName(String goodsName) {
+    this.goodsName = goodsName;
+  }
 
-    public String getImgSrc() {
-        return imgSrc;
-    }
+  public String getGoodsType() {
+    return goodsType;
+  }
 
-    public void setImgSrc(String imgSrc) {
-        this.imgSrc = imgSrc;
-    }
+  public void setGoodsType(String goodsType) {
+    this.goodsType = goodsType;
+  }
 
-    public Integer getGoodsPrice() {
-        return goodsPrice;
-    }
+  public String getImgSrc() {
+    return imgSrc;
+  }
 
-    public void setGoodsPrice(Integer goodsPrice) {
-        this.goodsPrice = goodsPrice;
-    }
+  public void setImgSrc(String imgSrc) {
+    this.imgSrc = imgSrc;
+  }
 
-    public String getCommentId() {
-        return commentId;
-    }
+  public Integer getGoodsPrice() {
+    return goodsPrice;
+  }
 
-    public void setCommentId(String commentId) {
-        this.commentId = commentId;
-    }
+  public void setGoodsPrice(Integer goodsPrice) {
+    this.goodsPrice = goodsPrice;
+  }
 
-    public String getOriginPlace() {
-        return originPlace;
-    }
+  public String getCommentId() {
+    return commentId;
+  }
 
-    public void setOriginPlace(String originPlace) {
-        this.originPlace = originPlace;
-    }
+  public void setCommentId(String commentId) {
+    this.commentId = commentId;
+  }
 
-    public String getSalesvolume() {
-        return salesvolume;
-    }
+  public String getOriginPlace() {
+    return originPlace;
+  }
 
-    public void setSalesvolume(String salesvolume) {
-        this.salesvolume = salesvolume;
-    }
+  public void setOriginPlace(String originPlace) {
+    this.originPlace = originPlace;
+  }
 
-    @Override
-    protected Serializable pkVal() {
-        return this.id;
-    }
+  public String getSalesvolume() {
+    return salesvolume;
+  }
 
-    @Override
-    public String toString() {
-        return "SaleGoods{" +
-                "id=" + id +
-                ", goodsName=" + goodsName +
-                ", goodsType=" + goodsType +
-                ", imgSrc=" + imgSrc +
-                ", goodsPrice=" + goodsPrice +
-                ", commentId=" + commentId +
-                ", originPlace=" + originPlace +
-                ", salesvolume=" + salesvolume +
-                "}";
-    }
+  public void setSalesvolume(String salesvolume) {
+    this.salesvolume = salesvolume;
+  }
+
+  @Override
+  protected Serializable pkVal() {
+    return this.id;
+  }
+
+  @Override
+  public String toString() {
+    return "SaleGoods{" +
+      "id=" + id +
+      ", goodsName=" + goodsName +
+      ", goodsType=" + goodsType +
+      ", imgSrc=" + imgSrc +
+      ", goodsPrice=" + goodsPrice +
+      ", commentId=" + commentId +
+      ", originPlace=" + originPlace +
+      ", salesvolume=" + salesvolume +
+      "}";
+  }
 }

@@ -20,127 +20,212 @@ import java.io.Serializable;
 @TableName("sale_order")
 public class SaleOrder extends Model<SaleOrder> {
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    @TableId("ID")
-    private String id;
+  @TableId("ID")
+  private String id;
 
-    @TableField("USER_ID")
-    private String userId;
+  @TableField("USER_ID")
+  private String userId;
 
-    @TableField("IS_BUY")
-    private String isBuy;
+  @TableField("IS_BUY")
+  private String isBuy;
 
-    @TableField("CREATE_DATA")
-    private String createData;
+  @TableField("CREATE_DATA")
+  private String createData;
 
-    @TableField("GOODS_ID")
-    private String goodId;
+  @TableField("GOODS_ID")
+  private String goodsId;
 
-    @TableField("GOODS_NAME")
-    private String goodName;
+  @TableField("GOODS_NAME")
+  private String goodsName;
 
-    @TableField("BUY_NUM")
-    private Integer buyNum;
+  @TableField("BUY_NUM")
+  private Integer buyNum;
 
-    @TableField("BUY_PRICE")
-    private String buyPrice;
+  @TableField("BUY_PRICE")
+  private String buyPrice;
 
-    @TableField("ADDRESS_ID")
-    private String addressId;
+  @TableField("ADDRESS_ID")
+  private String addressId;
 
-    @TableField("CREATE_DATE")
-    private String createDate;
+  @TableField("CREATE_DATE")
+  private String createDate;
 
-    public String getCreateDate() {
-        return createDate;
-    }
+  @TableField("STATUS")
+  private String status;
 
-    public void setCreateDate(String createDate) {
-        this.createDate = createDate;
-    }
+  @TableField(exist = false)
+  private String userName;
+  @TableField(exist = false)
+  private String province;
+  @TableField(exist = false)
+  private String city;
+  @TableField(exist = false)
+  private String area;
+  @TableField(exist = false)
+  private String phoneNum;
+  @TableField(exist = false)
+  private String detailAdress;
+  @TableField(exist = false)
+  private String isUseed;
 
-    public String getAddressId() {
-        return addressId;
-    }
+  public String getUserName() {
+    return userName;
+  }
 
-    public void setAddressId(String addressId) {
-        this.addressId = addressId;
-    }
+  public void setUserName(String userName) {
+    this.userName = userName;
+  }
 
-    public String getGoodName() {
-        return goodName;
-    }
+  public String getProvince() {
+    return province;
+  }
 
-    public void setGoodName(String goodName) {
-        this.goodName = goodName;
-    }
+  public void setProvince(String province) {
+    this.province = province;
+  }
 
-    public Integer getBuyNum() {
-        return buyNum;
-    }
+  public String getCity() {
+    return city;
+  }
 
-    public void setBuyNum(Integer buyNum) {
-        this.buyNum = buyNum;
-    }
+  public void setCity(String city) {
+    this.city = city;
+  }
 
-    public String getBuyPrice() {
-        return buyPrice;
-    }
+  public String getArea() {
+    return area;
+  }
 
-    public void setBuyPrice(String buyPrice) {
-        this.buyPrice = buyPrice;
-    }
+  public void setArea(String area) {
+    this.area = area;
+  }
 
-    public String getUserId() {
-        return userId;
-    }
+  public String getPhoneNum() {
+    return phoneNum;
+  }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
+  public void setPhoneNum(String phoneNum) {
+    this.phoneNum = phoneNum;
+  }
 
-    public String getIsBuy() {
-        return isBuy;
-    }
+  public String getDetailAdress() {
+    return detailAdress;
+  }
 
-    public void setIsBuy(String isBuy) {
-        this.isBuy = isBuy;
-    }
+  public void setDetailAdress(String detailAdress) {
+    this.detailAdress = detailAdress;
+  }
 
-    public String getCreateData() {
-        return createData;
-    }
+  public String getIsUseed() {
+    return isUseed;
+  }
 
-    public void setCreateData(String createData) {
-        this.createData = createData;
-    }
+  public String getGoodsId() {
+    return goodsId;
+  }
 
-    public String getGoodId() {
-        return goodId;
-    }
+  public void setGoodsId(String goodsId) {
+    this.goodsId = goodsId;
+  }
 
-    public void setGoodId(String goodId) {
-        this.goodId = goodId;
-    }
+  public String getGoodsName() {
+    return goodsName;
+  }
 
-    public String getId() {
-        return id;
-    }
+  public void setGoodsName(String goodsName) {
+    this.goodsName = goodsName;
+  }
 
-    public void setId(String id) {
-        this.id = id;
-    }
+  public void setIsUseed(String isUseed) {
+    this.isUseed = isUseed;
 
-    @Override
-    protected Serializable pkVal() {
-        return this.id;
-    }
+  }
 
-    @Override
-    public String toString() {
-        return "SaleOrder{" +
-                "id=" + id +
-                "}";
-    }
+  public String getStatus() {
+    return status;
+  }
+
+  public void setStatus(String status) {
+    this.status = status;
+  }
+
+  public String getCreateDate() {
+    return createDate;
+  }
+
+  public void setCreateDate(String createDate) {
+    this.createDate = createDate;
+  }
+
+  public String getAddressId() {
+    return addressId;
+  }
+
+  public void setAddressId(String addressId) {
+    this.addressId = addressId;
+  }
+
+
+  public Integer getBuyNum() {
+    return buyNum;
+  }
+
+  public void setBuyNum(Integer buyNum) {
+    this.buyNum = buyNum;
+  }
+
+  public String getBuyPrice() {
+    return buyPrice;
+  }
+
+  public void setBuyPrice(String buyPrice) {
+    this.buyPrice = buyPrice;
+  }
+
+  public String getUserId() {
+    return userId;
+  }
+
+  public void setUserId(String userId) {
+    this.userId = userId;
+  }
+
+  public String getIsBuy() {
+    return isBuy;
+  }
+
+  public void setIsBuy(String isBuy) {
+    this.isBuy = isBuy;
+  }
+
+  public String getCreateData() {
+    return createData;
+  }
+
+  public void setCreateData(String createData) {
+    this.createData = createData;
+  }
+
+
+  public String getId() {
+    return id;
+  }
+
+  public void setId(String id) {
+    this.id = id;
+  }
+
+  @Override
+  protected Serializable pkVal() {
+    return this.id;
+  }
+
+  @Override
+  public String toString() {
+    return "SaleOrder{" +
+      "id=" + id +
+      "}";
+  }
 }

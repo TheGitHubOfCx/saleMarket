@@ -38,85 +38,85 @@ import java.util.List;
 @Transactional
 public class DataPlayService {
 
-    @Autowired
-    DataPlayMapper dataPlayMapper;
+  @Autowired
+  DataPlayMapper dataPlayMapper;
 
-    @Autowired
-    SaleUserMapper saleUserMapper;
+  @Autowired
+  SaleUserMapper saleUserMapper;
 
-    @Autowired
-    SaleMessageMapper saleMessageMapper;
+  @Autowired
+  SaleMessageMapper saleMessageMapper;
 
-    //发送验证码的请求路径URL
-    public static final String
-            SERVER_URL = "https://api.netease.im/sms/sendcode.action";
-    //网易云信分配的账号，请替换你在管理后台应用下申请的Appkey
-    public static final String
-            APP_KEY = "b550b951b1484086ff67e7e46b695ca3";
-    //网易云信分配的密钥，请替换你在管理后台应用下申请的appSecret
-    public static final String APP_SECRET = "8c8026bff5fa";
+  //发送验证码的请求路径URL
+  public static final String
+    SERVER_URL = "https://api.netease.im/sms/sendcode.action";
+  //网易云信分配的账号，请替换你在管理后台应用下申请的Appkey
+  public static final String
+    APP_KEY = "b550b951b1484086ff67e7e46b695ca3";
+  //网易云信分配的密钥，请替换你在管理后台应用下申请的appSecret
+  public static final String APP_SECRET = "8c8026bff5fa";
 
-    //网易云信短信验证码长度
-    public static final String CODELEN = "6";
+  //网易云信短信验证码长度
+  public static final String CODELEN = "6";
 
-    //网易云信短信验证码模板
-    public static final String TEMPLATEID = "9664462";
+  //网易云信短信验证码模板
+  public static final String TEMPLATEID = "9664462";
 
-    public List<SaleUser> queryUserList() {
-        List<SaleUser> saleUsersList = dataPlayMapper.selectList(null);
-        return saleUsersList;
-    }
+  public List<SaleUser> queryUserList() {
+    List<SaleUser> saleUsersList = dataPlayMapper.selectList(null);
+    return saleUsersList;
+  }
 
-    /**
-     * 注册用户
-     */
-    public void registerUser(String userName, String passWord, String phoneNum, String sex, HttpServletResponse response) {
-        SaleUser saleUser = new SaleUser();
-        saleUser.setId(IdKit.createId());
-        saleUser.setName(userName);
-        saleUser.setPassword(passWord);
-        saleUser.setPhoneNum(phoneNum);
-        saleUser.setSex(sex);
-        saleUserMapper.insert(saleUser);
-    }
+  /**
+   * 注册用户
+   */
+  public void registerUser(String userName, String passWord, String phoneNum, String sex, HttpServletResponse response) {
+    SaleUser saleUser = new SaleUser();
+    saleUser.setId(IdKit.createId());
+    saleUser.setName(userName);
+    saleUser.setPassword(passWord);
+    saleUser.setPhoneNum(phoneNum);
+    saleUser.setSex(sex);
+    saleUserMapper.insert(saleUser);
+  }
 
-    /**
-     * 商品列表
-     */
-    public List<SaleGoods> getGoodList(String input, String type) {
-        List<SaleGoods> goodList = dataPlayMapper.getGoodList(input.length() > 0 ? input : null, type.length() > 0 ? type : null);
-        return goodList;
-    }
+  /**
+   * 商品列表
+   */
+  public List<SaleGoods> getGoodList(String input, String type, String foodType) {
+    List<SaleGoods> goodList = dataPlayMapper.getGoodList(input.length() > 0 ? input : null, type.length() > 0 ? type : null, foodType.length() > 0 ? foodType : null);
+    return goodList;
+  }
 
-    /**
-     * 后端分页
-     */
-    public List<SaleGoods> goodsPagin(int current, int pageSize, String input, String type) {
+  /**
+   * 后端分页
+   */
+  public List<SaleGoods> goodsPagin(int current, int pageSize, String input, String type, String foodType) {
 //        int start = (current - 1) * pageSize;
-        int start = current - 1;
+    int start = current - 1;
 //        int end = current * pageSize + 1;
-        int limit = start * pageSize;
-        List<SaleGoods> saleGoods = dataPlayMapper.goodsPagin(limit, pageSize, input.length() > 0 ? input : null, type.length() > 0 ? type : null);
-        return saleGoods;
-    }
+    int limit = start * pageSize;
+    List<SaleGoods> saleGoods = dataPlayMapper.goodsPagin(limit, pageSize, input.length() > 0 ? input : null, type.length() > 0 ? type : null, foodType.length() > 0 ? foodType : null);
+    return saleGoods;
+  }
 
-    /**
-     * queryMessage
-     */
-    public List<SaleMessage> queryMessage() {
-        List<SaleMessage> saleMessages = saleMessageMapper.selectList(new EntityWrapper<SaleMessage>().orderBy("CREATED_DATE", false));
-        return saleMessages;
-    }
+  /**
+   * queryMessage
+   */
+  public List<SaleMessage> queryMessage() {
+    List<SaleMessage> saleMessages = saleMessageMapper.selectList(new EntityWrapper<SaleMessage>().orderBy("CREATED_DATE", false));
+    return saleMessages;
+  }
 
-    /**
-     * addMessage
-     */
-    public void addMessage(String message, String userId) {
-        SaleMessage saleMessage = new SaleMessage();
-        saleMessage.setId(IdKit.createId());
-        saleMessage.setMessage(message);
-        saleMessage.setCreateBy(userId);
-        saleMessage.setCreatedDate(new Date());
-        saleMessageMapper.insert(saleMessage);
-    }
+  /**
+   * addMessage
+   */
+  public void addMessage(String message, String userId) {
+    SaleMessage saleMessage = new SaleMessage();
+    saleMessage.setId(IdKit.createId());
+    saleMessage.setMessage(message);
+    saleMessage.setCreateBy(userId);
+    saleMessage.setCreatedDate(new Date());
+    saleMessageMapper.insert(saleMessage);
+  }
 }

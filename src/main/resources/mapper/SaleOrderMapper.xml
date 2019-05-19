@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.salemarket.mapper.SaleOrderMapper">
+
+  <select id="queryOrderInfoList" resultType="com.salemarket.entity.SaleOrder">
+    select * from sale_order a left join sale_adress b on a.ADDRESS_ID = b.ADRESS_ID
+    <where>
+      <if test="userId!=null">
+        a.USER_ID = #{userId}
+      </if>
+    </where>
+  </select>
+
+
+</mapper>

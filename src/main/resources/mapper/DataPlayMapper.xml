@@ -1,30 +1,38 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.salemarket.mapper.DataPlayMapper">
-    <select id="getGoodList" resultType="com.salemarket.entity.SaleGoods">
-        SELECT * FROM sale_goods
-        <where>
-            <if test="type!=null">
-                GOODS_TYPE=#{type}
-            </if>
+  <select id="getGoodList" resultType="com.salemarket.entity.SaleGoods">
+    SELECT * FROM sale_goods
+    <where>
+      <if test="type!=null">
+        GOODS_TYPE=#{type}
+      </if>
 
-            <if test="input!=null">
-                AND GOODS_NAME LIKE CONCAT(CONCAT('%',#{input}),'%')
-            </if>
-        </where>
-    </select>
+      <if test="foodType!=null">
+        AND FOOD_TYPE=#{foodType}
+      </if>
 
-    <select id="goodsPagin" resultType="com.salemarket.entity.SaleGoods">
-        SELECT * FROM sale_goods
-        <where>
-            <if test="type!=null">
-                GOODS_TYPE=#{type}
-            </if>
-            <if test="input!=null">
-                AND GOODS_NAME LIKE CONCAT(CONCAT('%',#{input}),'%')
-            </if>
-        </where>
-        limit #{limit},#{pageSize}
-    </select>
+      <if test="input!=null">
+        AND GOODS_NAME LIKE CONCAT(CONCAT('%',#{input}),'%')
+      </if>
+
+    </where>
+  </select>
+
+  <select id="goodsPagin" resultType="com.salemarket.entity.SaleGoods">
+    SELECT * FROM sale_goods
+    <where>
+      <if test="type!=null">
+        GOODS_TYPE=#{type}
+      </if>
+      <if test="foodType!=null">
+        AND FOOD_TYPE=#{foodType}
+      </if>
+      <if test="input!=null">
+        AND GOODS_NAME LIKE CONCAT(CONCAT('%',#{input}),'%')
+      </if>
+    </where>
+    limit #{limit},#{pageSize}
+  </select>
 
 </mapper>

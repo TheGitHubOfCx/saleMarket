@@ -14,8 +14,8 @@ import java.util.List;
 @Repository
 public interface DataPlayMapper extends BaseMapper<SaleUser> {
 
-    List<SaleGoods> getGoodList(@Param("input") String input, @Param("type") String type);
+    List<SaleGoods> getGoodList(@Param("input") String input, @Param("type") String type,@Param("foodType") String foodType);
 
-    List<SaleGoods> goodsPagin(@Param("limit") int limit, @Param("pageSize") int pageSize, @Param("input") String input, @Param("type") String type);
+    List<SaleGoods> goodsPagin(@Param("limit") int limit, @Param("pageSize") int pageSize, @Param("input") String input, @Param("type") String type,@Param("foodType") String foodType);
 
 }

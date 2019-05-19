@@ -15,7 +15,7 @@ spring:
       cache: false
       template-loader-path: classpath:/templates/
 jfw:
-  is-dev: true
+  is-dev: false
   dev-server-port: 8000
   is-ldap: false
   is-user-ldap: false
