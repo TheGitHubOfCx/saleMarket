@@ -218,7 +218,7 @@ class CoreLayout extends Component {
         <div className={styles.header}>
           <div className={styles.logo}>
             <img src='/img/linshi.png' className={styles.logoIcon} onClick={() => this.props.history.push('/')}/>
-            <span className={styles.logoText}>优乐零食网</span>
+            <span className={styles.logoText}>乐优零食网</span>
           </div>
           <div className={styles.badgeRight}>
             <Dropdown placement="bottomCenter" overlay={menu} trigger={['click']}>

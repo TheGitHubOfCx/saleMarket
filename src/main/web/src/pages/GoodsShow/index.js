@@ -72,7 +72,15 @@ class GoodsShow extends Component {
     const {dispatch, dataPlay} = this.props
     let {current} = dataPlay
     dispatch({type: 'dataPlay/getGoodList', payload: {input: value, type: null}})
-    dispatch({type: 'dataPlay/hotTypePagin', payload: {current, pageSize: 10, input: value, type: ''}})
+    dispatch({type: 'dataPlay/hotTypePagin', payload: {current, pageSize: 10, input: value, type: 'hot', foodType: ''}})
+    dispatch({
+      type: 'dataPlay/disTypePagin',
+      payload: {current, pageSize: 10, input: value, type: 'discount', foodType: ''}
+    })
+    dispatch({
+      type: 'dataPlay/impTypePagin',
+      payload: {current, pageSize: 10, input: value, type: 'import', foodType: ''}
+    })
   }
 
   showDetail(id, imgSrc) {
@@ -108,7 +116,7 @@ class GoodsShow extends Component {
             <div>
               <img src="/img/linshi.png" style={{width: '47px'}}/>
             </div>
-            <div className={styles.name}>优乐零食网</div>
+            <div className={styles.name}>乐优零食网</div>
           </div>
           <div className={styles.search}>
             <div className={styles.searchDiv}>
