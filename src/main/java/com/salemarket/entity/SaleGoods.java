@@ -38,9 +38,29 @@ public class SaleGoods extends Model<SaleGoods> {
   private String originPlace;
   @TableField("SALESVOLUME")
   private String salesvolume;
+  @TableField("UPLOAD_FILE")
+  private String uploadFile;
+  @TableField("FILE_ID")
+  private String fileId;
 
   @TableField("FOOD_TYPE")
   private String foodType;
+
+  public String getUploadFile() {
+    return uploadFile;
+  }
+
+  public void setUploadFile(String uploadFile) {
+    this.uploadFile = uploadFile;
+  }
+
+  public String getFileId() {
+    return fileId;
+  }
+
+  public void setFileId(String fileId) {
+    this.fileId = fileId;
+  }
 
   public String getFoodType() {
     return foodType;

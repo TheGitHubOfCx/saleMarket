@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import styles from './index.less';
-import {Menu, Icon, Input, Layout, Form, Modal, Table, Popconfirm, Select, Button} from 'antd'
+import {Menu, Icon, Input, Layout, Form, Modal, Table, Popconfirm, Select, Button,Upload,Tooltip} from 'antd'
 import {connect} from 'dva'
 import router from 'umi/router';
 import axios from 'axios'
@@ -18,6 +18,9 @@ class OrderModal extends Component {
     super(props)
     this.state = {
       keyValue: '',
+      files:[],
+      upload: '',
+      imgVisible: false,
     }
   }
 
@@ -57,7 +60,7 @@ class OrderModal extends Component {
       }
       if (goodRecord) {
         values['id'] = goodRecord.id
-        axios.post('/updateGoods', {values}).then(res => {
+        axios.post('/updateGoods', {values,file: values.imgSrc ? values.imgSrc.file.response.payload : ''}).then(res => {
           if (res.data.code === 1) {
             axios.post('/getGoodList', {type: '', input: '', foodType: ''}).then(res => {
               dispatch({type: 'signIn/setState', payload: {goodInfoList: res.data.payload}})
@@ -70,7 +73,7 @@ class OrderModal extends Component {
           alert("修改", {code: 0})
         );
       } else {
-        axios.post('/addGoods', {values}).then(res => {
+        axios.post('/addGoods', {values,file: values.imgSrc ? values.imgSrc.file.response.payload : ''}).then(res => {
           if (res.data.code === 1) {
             axios.post('/getGoodList', {type: '', input: '', foodType: ''}).then(res => {
               dispatch({type: 'signIn/setState', payload: {goodInfoList: res.data.payload}})
@@ -118,8 +121,34 @@ class OrderModal extends Component {
     dispatch({type: 'signIn/setState', payload: {typeOfFood: e}})
   }
 
+  setFiles(files) {
+    this.setState({files: files.fileList})
+  }
+
+  removeFlie(index, filePath, fileId) {
+    let {files} = this.state
+    axios.post('/onDeleteFile', {filePath, fileId}).then(res => {
+      // dispatch({type: 'signIn/setState', payload: {goodInfoList: res.data.payload}})
+    }).catch(err =>
+      alert("删除图片", {code: 0})
+    );
+    // dispatch({type: 'goldCard/onDeleteFile', payload: {filePath, fileId}})
+    files.splice(index, 1)
+    this.setState({files})
+  }
+
+  //预览
+  showImg(e, upload) {
+    this.setState({upload: upload, imgVisible: true})
+  }
+
+  cancerImg() {
+    this.setState({imgVisible: false})
+  }
+
   render() {
     const {form, signIn} = this.props
+    const {files,imgVisible,upload} = this.state
     const {goodInfoList, goodVisible, goodRecord, typeOfFood} = signIn
     const formItemLayout2 = {labelCol: {span: 5}, wrapperCol: {span: 15}}
     const {keyValue} = this.state
@@ -144,8 +173,27 @@ class OrderModal extends Component {
       key: 'goodsType',
     }, {
       title: '图片',
-      dataIndex: 'imgSrc',
-      key: 'imgSrc',
+      dataIndex: 'uploadFile',
+      key: 'uploadFile',
+      render: (text, record) => {
+        let fileType = text ? text.substring(text.lastIndexOf('.'), text.length) : ''//判断文件格式
+        return text ? fileType === '.png' || fileType === '.jpg' ? <Tooltip placement="top" title='预览'>
+          <img src={`/preview?id=${record.fileId}&&name=${record.uploadFile}`}
+               height={35}
+               width={35}
+               className={styles.pictureImg}
+               onClick={(e) => this.showImg(e, record)}/>
+        </Tooltip> :
+          <Tooltip placement="top" title='下载'>
+            <img src={fileType === '.txt' ? '/img/txt.jpg' :
+              fileType === '.xls' || fileType === '.xlsx' ? '/img/excel.png' :
+                fileType === '.doc' || fileType === '.docx' ? '/img/word.jpg' :
+                  fileType === '.ppt' || fileType === '.pptx' ? '/img/ppt.jpg' :
+                    fileType === '.pdf' ? '/img/pdf.jpg' : '无'}
+                 // onClick={() => this.downFile(record.fileId)}
+                 style={{width: '27px', height: '27px'}}/>
+          </Tooltip> : '无'
+      }
     }, {
       title: '产地',
       dataIndex: 'originPlace',
@@ -180,6 +228,11 @@ class OrderModal extends Component {
         </div>
       }
     }];
+    const props = {
+      action: '/uploadFile',
+      listType: 'picture',
+      showUploadList: false,
+    };
     return (
       <Layout className={styles.box}>
         <div>
@@ -242,13 +295,45 @@ class OrderModal extends Component {
             </Form.Item>
             <Form.Item label="图片:" {...formItemLayout2}>
               {getFieldDecorator('imgSrc', {
-                initialValue: goodRecord ? goodRecord.imgSrc : '',
+                initialValue: '',
                 rules: [],
               })(
-                <Input style={{width: '300px', marginRight: '30px'}}
-                       placeholder="请输入图片地址"/>
+                <Upload {...props} fileList={files}
+                        onChange={(files) => this.setFiles(files)}>
+                  <Tooltip placement="top" title='添加附件'>
+                    <Button icon="paper-clip" style={{fontSize: 20}}/>
+                  </Tooltip>
+                </Upload>
               )}
             </Form.Item>
+            <div className={styles.fileCard} style={{
+              width: '347px', height: '53px', marginLeft: '28px',
+              overflowY: 'auto'
+            }}>
+              {files && files.length > 0 ? files.map((file, index) => {
+                let fileType = file.name.substring(file.name.lastIndexOf('.'), file.name.length)//判断文件格式
+                return <div className={styles.fileShow} style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  width: '292px',
+                  marginLeft: '31px'
+                }}>
+                  <div className={styles.uploadFile}>
+                    <img className={styles.uploadImg} style={{width: '20px'}}
+                         src={fileType === '.txt' ? '/img/txt.jpg' :
+                           fileType === '.xls' || fileType === '.xlsx' ? '/img/excel.png' :
+                             fileType === '.doc' || fileType === '.docx' ? '/img/word.jpg' :
+                               fileType === '.ppt' || fileType === '.pptx' ? '/img/ppt.jpg' :
+                                 fileType === '.pdf' ? '/img/pdf.jpg' : '/img/help.png'}/>
+                    <span className={styles.uploadFileName}>{file.name}</span>
+                  </div>
+                  <div>
+                    <Icon type="close"
+                          onClick={() => this.removeFlie(index, file.response.payload.filePath, file.response.payload.fileId)}/>
+                  </div>
+                </div>
+              }) : void 0}
+            </div>
             <Form.Item label="产地:" {...formItemLayout2}>
               {getFieldDecorator('originPlace', {
                 initialValue: goodRecord ? goodRecord.originPlace : '',
@@ -275,6 +360,11 @@ class OrderModal extends Component {
               )}
             </Form.Item>
           </Form>
+        </Modal>
+        <Modal visible={imgVisible} onCancel={() => this.cancerImg()} footer={null} closable={false}
+               className={styles.bigModal}>
+          <img style={{width: '470px'}} src={`/preview?id=${upload.fileId}&&name=${upload.uploadFile}`}
+               className={styles.bigImg}/>
         </Modal>
       </Layout>
     )

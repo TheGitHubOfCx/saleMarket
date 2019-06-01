@@ -160,7 +160,7 @@ class GoodsShow extends Component {
                     hotPaginList && hotPaginList.length > 0 ? hotPaginList.map((data, index) => {
                       return <div className={styles.good}
                                   onClick={() => this.showDetail(data.id, imgList ? imgList[index].imgSrc : data.imgSrc)}>
-                        <div><img src={imgList ? imgList[index].imgSrc : data.imgSrc} style={{
+                        <div><img src={`/preview?id=${data.fileId}&&name=${data.uploadFile}`} style={{
                           width: '230px',
                           height: '215px'
                         }}/></div>
@@ -197,8 +197,8 @@ class GoodsShow extends Component {
                 <div className={styles.goodsShow}>
                   {
                     disPaginList && disPaginList.length > 0 ? disPaginList.map((data, index) => {
-                      return <div className={styles.good}>
-                        <div><img src={imgList ? imgList[index + 2].imgSrc : data.imgSrc} style={{
+                      return <div className={styles.good} onClick={() => this.showDetail(data.id, imgList ? imgList[index].imgSrc : data.imgSrc)}>
+                        <div><img src={`/preview?id=${data.fileId}&&name=${data.uploadFile}`} style={{
                           width: '230px',
                           height: '215px'
                         }}/></div>
@@ -236,8 +236,8 @@ class GoodsShow extends Component {
                 <div className={styles.goodsShow}>
                   {
                     impPaginList && impPaginList.length > 0 ? impPaginList.map((data, index) => {
-                      return <div className={styles.good}>
-                        <div><img src={imgList ? imgList[index + 4].imgSrc : data.imgSrc} style={{
+                      return <div className={styles.good} onClick={() => this.showDetail(data.id, imgList ? imgList[index].imgSrc : data.imgSrc)}>
+                        <div><img src={`/preview?id=${data.fileId}&&name=${data.uploadFile}`} style={{
                           width: '230px',
                           height: '215px'
                         }}/></div>

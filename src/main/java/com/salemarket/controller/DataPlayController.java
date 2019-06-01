@@ -11,13 +11,12 @@ import com.salemarket.service.DataPlayService;
 import com.salemarket.service.ManageService;
 import com.wordnik.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -149,7 +148,14 @@ public class DataPlayController {
   public Result addGoods(@RequestBody Map map) {
     try {
       SaleGoods saleGoods = JSON.parseObject(JSON.toJSONString(map.get("values")), SaleGoods.class);
-      manageService.addGoods(saleGoods);
+      saleGoods.setImgSrc("");
+      Map file = new HashMap();
+      if (null != map.get("file")) {
+        file = (Map) map.get("file");
+        manageService.addGoods(saleGoods,file);
+      } else {
+        manageService.addGoodsNoFile(saleGoods);
+      }
       return ResultBuilder.success().build();
     } catch (Exception e) {
       return ResultBuilder.error("新增商品失败失败", e).build();
@@ -171,7 +177,14 @@ public class DataPlayController {
   public Result updateGoods(@RequestBody Map map) {
     try {
       SaleGoods saleGoods = JSON.parseObject(JSON.toJSONString(map.get("values")), SaleGoods.class);
-      manageService.updateGoods(saleGoods);
+      saleGoods.setImgSrc("");
+      Map file = new HashMap();
+      if (null != map.get("file")) {
+        file = (Map) map.get("file");
+        manageService.updateGoods(saleGoods,file);
+      } else {
+        manageService.updateGoodsNoFile(saleGoods);
+      }
       return ResultBuilder.success().build();
     } catch (Exception e) {
       return ResultBuilder.error("修改商品失败失败", e).build();
@@ -220,6 +233,43 @@ public class DataPlayController {
       return ResultBuilder.error("删除订单失败", e).build();
     }
   }
+
+  @RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
+  public Result uploadFile(@RequestParam("file") MultipartFile file) {
+    try {
+      Map map = manageService.uploadFile(file);
+      return ResultBuilder.withPayload(map).build();
+    } catch (Exception e) {
+      return ResultBuilder.error("上传失败", e).build();
+    }
+  }
+
+  @RequestMapping(value = "/preview")
+  public Result preview(@RequestParam String id, @RequestParam String name, HttpServletResponse response) {
+    try {
+      manageService.preview(id, name, response);
+      return ResultBuilder.success().build();
+    } catch (Exception e) {
+      return ResultBuilder.error("图片展示失败", e).build();
+    }
+  }
+
+  /**
+   * 删除附件
+   */
+  @RequestMapping(value = "/onDeleteFile", method = RequestMethod.POST)
+  public Result onDeleteFile(@RequestBody Map map) {
+    try {
+      String filePath = (String) map.get("filePath");
+      String fileId = (String) map.get("fileId");
+      manageService.onDeleteFile(filePath,fileId);
+      return ResultBuilder.success().build();
+    } catch (Exception e) {
+      return ResultBuilder.error("删除附件失败", e).build();
+    }
+  }
+
+
 
 
 }

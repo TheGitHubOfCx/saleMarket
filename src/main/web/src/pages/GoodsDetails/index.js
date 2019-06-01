@@ -89,7 +89,7 @@ class Details extends Component {
         <div className={styles.body}>
           <div className={styles.infoBox}>
             <div className={styles.img}>
-              <img style={{width: '440px'}} src={imgSrc}/>
+              <img style={{width: '440px'}} src={`/preview?id=${goodDetail.fileId}&&name=${goodDetail.uploadFile}`}/>
             </div>
             <div className={styles.details} style={{margin: "0 0 0 10px"}}>
               <div className={styles.name} style={{fontSize: "18px"}}>
